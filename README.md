@@ -23,7 +23,7 @@ python rf_features.py -h
 
 Example usage with iris dataset;
 ```
-python rf_feature.py -i ~/test_datasets/iris.csv -n 500 -o ./rf_output.csv
+python ./FeatureSelection/RandomForest/rf_feature.py -i ./test_datasets/iris.csv -n 500 -o ./rf_output.csv
 ```
 
 
