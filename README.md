@@ -12,6 +12,9 @@ Output of the script is a csv file containing features and their total number of
 
 
 To run the script, clone the repo with git, or just download it directly. 
+```
+git clone https://github.com/kcanakdag/Bioinformatics
+```
 
 Install the required packages with pip:
 
