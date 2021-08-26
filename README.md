@@ -27,10 +27,6 @@ After installing the required packages you can test the script by running the fo
 python rf_features.py -h
 ```
 
-Example usage with iris dataset;
-```
-python ./FeatureSelection/RandomForest/rf_feature.py -i ./test_datasets/iris.csv -n 500 -o ./rf_output.csv
-```
 
 #### Parameters
 
@@ -48,3 +44,8 @@ python ./FeatureSelection/RandomForest/rf_feature.py -i ./test_datasets/iris.csv
 
 -o is a str, the name of the output file-path.
 
+
+#### Example usage with iris dataset;
+```
+python ./FeatureSelection/RandomForest/rf_feature.py -i ./test_datasets/iris.csv -n 500 -o ./rf_output.csv
+```
