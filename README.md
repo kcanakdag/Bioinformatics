@@ -22,7 +22,7 @@ Install the required packages with pip:
 pip3 install -r requirements.txt
 ```
 
-After installing the required packages you can run the following command;
+After installing the required packages you can test the script by running the following command;
 ```
 python rf_features.py -h
 ```
@@ -32,5 +32,19 @@ Example usage with iris dataset;
 python ./FeatureSelection/RandomForest/rf_feature.py -i ./test_datasets/iris.csv -n 500 -o ./rf_output.csv
 ```
 
+#### Parameters
 
+-i is a str, the input parameter, it is required and should be a path to a .csv dataset.
+
+-min is an int, the amount of minimum samples required to classify a dataset in decision tree. Lower values may lead to overfitting. Default is 10.
+
+-nf is an int, Number of features randomly selected with each decision tree training. So if you have a lot of features, randomly selecting a number of them shortens the time required to create decision trees greatly. Default is 100
+
+-tt is an int, the train-test split size in percentage. Default is 20.
+
+-n is an int, number of trees generated. default is 20
+
+-acc is an int as accuracy cutoff for each tree in percentage. default is 90
+
+-o is a str, the name of the output file-path.
 
