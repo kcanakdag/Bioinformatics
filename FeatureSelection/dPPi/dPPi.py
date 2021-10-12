@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 from Normalization import std_range
 
+PATH_TRANSCRIPTOME = r"~/PycharmProjects/Bioinformatics/test_datasets/ppi_test.csv"
+PATH_PPI = r"~/PycharmProjects/Bioinformatics/test_datasets/ppi_test.csv"
+PATH_Q_TABLE_SAVE = r"~/PycharmProjects/Bioinformatics/q_table.csv"
+
 
 def count_ppi_states(input_df, ppi_arr):
     result_dict = {}
@@ -28,7 +32,7 @@ def count_ppi_states(input_df, ppi_arr):
 def get_q_table(c_states, t_states, c_size, t_size):
     def q_func(n_tumor_state, n_control_state, n_tumor_samples, n_control_samples):
         q = (n_tumor_state / n_tumor_samples) / (
-                    (n_control_state / n_control_samples) + (n_tumor_state / n_tumor_samples))
+                (n_control_state / n_control_samples) + (n_tumor_state / n_tumor_samples))
         return q
 
     result_dict = {'PPI': [], 'state': [], 'q-value': []}
@@ -41,6 +45,7 @@ def get_q_table(c_states, t_states, c_size, t_size):
                 n_t_state = 0
             q_value = q_func(n_tumor_state=n_t_state, n_control_state=n_c_state, n_tumor_samples=t_size,
                              n_control_samples=c_size)
+            print(q_value)
             if q_value < 0.10 or q_value > 0.90:
                 if n_t_state / t_size >= 0.20 and n_c_state / c_size >= 0.20:
                     result_dict['PPI'].append(ppi)
@@ -56,6 +61,7 @@ def get_q_table(c_states, t_states, c_size, t_size):
                 n_c_state = 0
             q_value = q_func(n_tumor_state=n_t_state, n_control_state=n_c_state, n_tumor_samples=t_size,
                              n_control_samples=c_size)
+            print(q_value)
             if q_value < 0.10 or q_value > 0.90:
                 if n_t_state / t_size >= 0.20 and n_c_state / c_size >= 0.20:
                     result_dict['PPI'].append(ppi)
@@ -65,7 +71,7 @@ def get_q_table(c_states, t_states, c_size, t_size):
     return result_dict
 
 
-input_path_transcriptome = r"~/PycharmProjects/Bioinformatics/test_datasets/dppi_test.csv"
+input_path_transcriptome = PATH_PPI
 df = pd.read_csv(input_path_transcriptome, header=0, index_col=None)
 df = df.rename(columns={str(df.columns[-1]): 'label'})
 df.iloc[:, -1] = df.iloc[:, -1].apply(str).values  # convert last column (labels) into str
@@ -88,7 +94,7 @@ std_range.s_normalization(input_array=c_labeled.values, input_columns=c_labeled.
 std_range.s_normalization(input_array=t_labeled.values, input_columns=t_labeled.columns, sigma_coefficient=1)
 
 # PPI data
-input_path_ppi = r"~/PycharmProjects/Bioinformatics/test_datasets/ppi_test.csv"
+input_path_ppi = PATH_TRANSCRIPTOME
 df_ppi = pd.read_csv(input_path_ppi, header=None, index_col=None)
 ppi_array = df_ppi.values
 
@@ -97,3 +103,5 @@ t_ppi_states = count_ppi_states(t_labeled, ppi_array)
 
 q_table = get_q_table(c_states=c_ppi_states, t_states=t_ppi_states, c_size=len(c_labeled), t_size=len(t_labeled))
 q_table_df = pd.DataFrame.from_dict(q_table)
+
+q_table_df.to_csv(path_or_buf=PATH_Q_TABLE_SAVE)
