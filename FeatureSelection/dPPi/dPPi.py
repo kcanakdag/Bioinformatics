@@ -47,7 +47,7 @@ def get_q_table(c_states, t_states, c_size, t_size):
                              n_control_samples=c_size)
             print(q_value)
             if q_value < 0.10 or q_value > 0.90:
-                if n_t_state / t_size >= 0.20 and n_c_state / c_size >= 0.20:
+                # if n_t_state / t_size >= 0.20 and n_c_state / c_size >= 0.20:
                     result_dict['PPI'].append(ppi)
                     result_dict['state'].append(state)
                     result_dict['q-value'].append(q_value)
@@ -63,7 +63,7 @@ def get_q_table(c_states, t_states, c_size, t_size):
                              n_control_samples=c_size)
             print(q_value)
             if q_value < 0.10 or q_value > 0.90:
-                if n_t_state / t_size >= 0.20 and n_c_state / c_size >= 0.20:
+                # if n_t_state / t_size >= 0.20 and n_c_state / c_size >= 0.20:
                     result_dict['PPI'].append(ppi)
                     result_dict['state'].append(state)
                     result_dict['q-value'].append(q_value)
@@ -71,7 +71,7 @@ def get_q_table(c_states, t_states, c_size, t_size):
     return result_dict
 
 
-input_path_transcriptome = PATH_PPI
+input_path_transcriptome = PATH_TRANSCRIPTOME
 df = pd.read_csv(input_path_transcriptome, header=0, index_col=None)
 df = df.rename(columns={str(df.columns[-1]): 'label'})
 df.iloc[:, -1] = df.iloc[:, -1].apply(str).values  # convert last column (labels) into str
@@ -94,7 +94,7 @@ std_range.s_normalization(input_array=c_labeled.values, input_columns=c_labeled.
 std_range.s_normalization(input_array=t_labeled.values, input_columns=t_labeled.columns, sigma_coefficient=1)
 
 # PPI data
-input_path_ppi = PATH_TRANSCRIPTOME
+input_path_ppi = PATH_PPI
 df_ppi = pd.read_csv(input_path_ppi, header=None, index_col=None)
 ppi_array = df_ppi.values
 
